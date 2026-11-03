@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="token" content="__TOKEN__">
+<title>Local AI</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="aurora"><i></i><i></i><i></i></div>
+
+<header class="top">
+  <div class="brand">
+    <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b6cff"/><stop offset="1" stop-color="#22d3ee"/></linearGradient></defs><rect width="32" height="32" rx="9" fill="url(#lg)"/><path d="M9 21V11l7 6 7-6v10" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span>Local AI</span>
+    <em id="demoBadge" hidden>DEMO</em>
+  </div>
+  <button class="chip model-chip" id="modelChip" hidden>
+    <span class="dot"></span><span id="modelChipName"></span><span class="caps-mini" id="modelChipCaps"></span><span class="upd" id="modelChipUpd" hidden></span>
+    <svg viewBox="0 0 24 24" width="14" height="14"><path d="M7 10l5 5 5-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+  </button>
+  <div class="spacer"></div>
+  <button class="icon-btn" id="themeBtn" title="Theme" aria-label="Theme">
+    <svg viewBox="0 0 24 24" width="18" height="18"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+  </button>
+  <div class="seg" id="langSeg"><button data-lang="ru">RU</button><button data-lang="en">EN</button></div>
+  <button class="help-btn" id="helpBtn">
+    <svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 21s-7.5-4.6-9.3-9.2C1.5 8.5 3.4 5.5 6.6 5.5c2 0 3.6 1.1 5.4 3 1.8-1.9 3.4-3 5.4-3 3.200 0 5.100 3 3.900 6.300C19.500 16.400 12 21 12 21z" fill="currentColor"/></svg>
+    <span data-i18n="help">Помощь проекту</span>
+  </button>
+</header>
+
+<main>
+  <!-- сканирование -->
+  <section id="v-scan" class="view center">
+    <div class="spinner"></div>
+    <p data-i18n="scanning"></p>
+  </section>
+
+  <!-- приветствие / подбор -->
+  <section id="v-welcome" class="view welcome" hidden>
+    <div class="hero">
+      <h1 data-i18n="heroTitle"></h1>
+      <p data-i18n="heroText"></p>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <h3 data-i18n="yourPc"></h3>
+        <div class="stats" id="hwStats"></div>
+      </div>
+      <div class="card rec" id="recCard"></div>
+    </div>
+  </section>
+
+  <!-- установка -->
+  <section id="v-install" class="view center" hidden>
+    <div class="card install">
+      <h2 id="instTitle"></h2>
+      <div id="instSteps"></div>
+      <p class="muted small" id="instNote"></p>
+      <div class="row" id="instActions"></div>
+    </div>
+  </section>
+
+  <!-- чат -->
+  <section id="v-chat" class="view chat" hidden>
+    <aside class="side">
+      <button class="btn primary wide" id="newChatBtn">＋ <span data-i18n="newChat"></span></button>
+      <div class="side-title" data-i18n="chats"></div>
+      <div id="chatList" class="chat-list"></div>
+      <div class="side-stats" id="sideStats"></div>
+      <button class="btn wide side-btn" id="pickModelBtn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span data-i18n="pickModel"></span></button>
+      <button class="btn wide side-btn" id="pcBtn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg><span data-i18n="yourPc"></span></button>
+    </aside>
+    <div class="conv">
+      <div id="messages" class="messages"></div>
+      <form id="composer" class="composer">
+        <div class="comp-box">
+          <div class="attach-list" id="attachList" hidden></div>
+          <textarea id="input" rows="1"></textarea>
+          <div class="comp-bar">
+            <div class="tools" id="compTools"></div>
+            <input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp,image/gif,image/bmp" multiple hidden>
+            <input type="file" id="docInput" multiple hidden>
+            <div class="spacer"></div>
+            <button type="submit" class="send" id="sendBtn" aria-label="Send">
+              <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12l14-7-5 14-2-6-7-1z" fill="currentColor"/></svg>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<!-- модальные окна -->
+<div class="overlay" id="modelsModal" hidden>
+  <div class="modal wide-modal">
+    <div class="modal-head"><h2 data-i18n="models"></h2><button class="icon-btn" id="modelsClose" aria-label="Close">✕</button></div>
+    <div id="modelsBody" class="modal-body"></div>
+  </div>
+</div>
+<div class="overlay" id="aboutModal" hidden>
+  <div class="modal wide-modal">
+    <div class="modal-head"><h2 data-i18n="about"></h2><button class="icon-btn" id="aboutClose" aria-label="Close">✕</button></div>
+    <div id="aboutBody" class="modal-body"></div>
+  </div>
+</div>
+<div class="overlay" id="pcModal" hidden>
+  <div class="modal">
+    <div class="modal-head"><h2 data-i18n="yourPc"></h2><button class="icon-btn" id="pcClose" aria-label="Close">✕</button></div>
+    <div class="modal-body"><div class="stats" id="pcStats"></div>
+      <div id="pcPaths"></div>
+      <div class="row"><button class="btn sm" id="pcRecheck"></button><span style="flex:1"></span><button class="btn sm danger-fill" id="pcUninstall" data-i18n="uninstallBtn"></button></div></div>
+  </div>
+</div>
+<div class="overlay" id="confirmModal" hidden>
+  <div class="modal">
+    <h2 id="cTitle"></h2>
+    <p id="cText"></p>
+    <div id="cExtra"></div>
+    <div class="row end"><button class="btn" id="cCancel" hidden></button><button class="btn" id="cNo"></button><button class="btn primary" id="cYes"></button></div>
+  </div>
+</div>
+
+<script src="/i18n.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>

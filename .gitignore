@@ -1,0 +1,11 @@
+# Local only
+CLAUDE.md
+CLAUDE.md.tmp*
+.claude/
+
+# Build output (the zip goes into the release)
+build/
+dist/
+LocalAI.spec
+__pycache__/
+*.pyc
