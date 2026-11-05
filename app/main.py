@@ -63,7 +63,7 @@ def main():
         try:
             import webview
             win = webview.create_window("Local AI", url, width=1120, height=760, min_size=(820, 560),
-                                        background_color="#0b0d14", js_api=Api())
+                                        background_color="#0b0d14", js_api=Api(), text_select=True)
 
             def close_on_quit():   # после полного удаления страница просит закрыть окно
                 server.quit_event.wait()
